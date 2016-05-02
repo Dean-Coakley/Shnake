@@ -23,6 +23,10 @@ clock = pygame.time.Clock()
 
 font = pygame.font.SysFont(None, 25)
 
+def score(score):
+    text = font.render("Score: " + str(score), True , BLACK)
+    gameDisplay.blit(text, [10, 10])
+
 def snake(snakeList):
     for XandY in snakeList:
 
@@ -52,6 +56,7 @@ def gameLoop():
     snakeList = []
     snakeLength = 1
 
+    last_move = 'right'
 
     while not gameExit:
         while gameOver == True:
@@ -73,21 +78,26 @@ def gameLoop():
                 gameExit = True
             if (event.type) == pygame.KEYDOWN:
                 #Move Left
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_LEFT and ( last_move != 'right'):
                     parent_x_change = -(block_size)
                     parent_y_change = 0
+                    last_move = 'left'
+
                 #Move Right
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_RIGHT and last_move != 'left':
                     parent_x_change = block_size
                     parent_y_change = 0
+                    last_move = 'right'
                 #Move Up
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_UP and last_move != 'down':
                     parent_y_change = -(block_size)
                     parent_x_change = 0
+                    last_move = 'up'
                 #Move Down
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_DOWN and last_move != 'up':
                     parent_y_change = block_size
                     parent_x_change = 0
+                    last_move = 'down'
 
                 #Quit Game
                 if event.key == pygame.K_ESCAPE:
@@ -110,14 +120,14 @@ def gameLoop():
         #pygame.draw.rect(gameDisplay, GREEN, [parent_x, parent_y, snake_size, snake_size])
         #params = (display layer, color, top left position (x,y), width, height)
 
-        #Clear snakehead coords
+        #Clear snakehead coords because there is now a new head
         snakeHead = []
         snakeHead.append(parent_x)
         snakeHead.append(parent_y)
         #Set new snakehead coords
         snakeList.append(snakeHead)
 
-        #Delete oldest element
+        #Delete oldest element to limit snake length
         if len(snakeList) > snakeLength:
             del snakeList[0]
 
@@ -127,6 +137,9 @@ def gameLoop():
                 gameOver = True
 
         snake(snakeList)
+
+        score(snakeLength - 1)
+
         pygame.display.update()
 
         #If you collide with food
@@ -134,7 +147,6 @@ def gameLoop():
             #Generate new food at random position
             randFoodX = random.randrange(0, (display_width - block_size), block_size)
             randFoodY = random.randrange(0, (display_height - block_size), block_size)
-            print("Food eaten")
 
             snakeLength += 1
 
