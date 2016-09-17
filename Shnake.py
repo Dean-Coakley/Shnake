@@ -140,23 +140,6 @@ def gameLoop(FPS):
         score(snakeLength - 2)
 
         pygame.display.update()
-        '''
-        If you collide with food
-        if parent_x == randFoodX and parent_y == randFoodY:
-            Generate new food at random position
-            randFoodX = random.randrange(0, (display_width - block_size), block_size)
-            randFoodY = random.randrange(0, (display_height - block_size), block_size)
-
-            snakeLength += 1
-
-        if (parent_x > randFoodX and parent_x < randFoodX + block_size) or parent_x + block_size > randFoodX and parent_x + block_size < randFoodX + block_size:
-            print "it works"
-            if parent_y > randFoodY and parent_y < randFoodY + block_size:
-                print "yep"
-
-            elif parent_y + block_size > randFoodY and parent_y + block_size < randFoodY + block_size:
-                print"no"
-        '''
 
         #Checks if you collide with Food
         if (parent_x + block_size > randFoodX and parent_x <randFoodX + block_size) and parent_y + block_size > randFoodY and parent_y < randFoodY + block_size:
@@ -164,7 +147,7 @@ def gameLoop(FPS):
             randFoodX = random.randrange(0, (display_width - block_size), block_size)
             randFoodY = random.randrange(0, (display_height - block_size), block_size)
             snakeLength += 1
-            print "FOOD"
+            print ("FOOD")
             FPS += 1
 
         clock.tick(FPS)
