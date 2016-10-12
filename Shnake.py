@@ -3,6 +3,7 @@ import random
 
 pygame.init()
 
+#Setup colours
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 GREEN = (0, 255, 0)
@@ -14,8 +15,10 @@ display_height = 600
 gameDisplay = pygame.display.set_mode((display_width, display_height))
 pygame.display.set_caption("Shnake")
 
+#Set initial game speed
 FPS = 8
 
+#Size of all snake and food elements
 block_size = 20
 
 clock = pygame.time.Clock()
@@ -29,6 +32,7 @@ def score(score):
     gameDisplay.blit(text, [10, 10])
 
 def snake(snakeList):
+    #For every coordinate in snakeList print snake item
     for XandY in snakeList:
         gameDisplay.fill (GREEN, rect=[XandY[0], XandY[1], block_size, block_size])
 
@@ -37,7 +41,7 @@ def text_objs(text, color):
     return textSurface, textSurface.get_rect()
 
 def message(message , color):
-    #Print message in colors color with AntiAliasing(Sp?)
+    #Print message in colors color with anti aliasing enabled
     screen_text = medfont.render(message, True, color)
     gameDisplay.blit(screen_text, [display_width / 2 - screen_text.get_width() / 2, display_height / 2 - screen_text.get_height() / 2])
 
@@ -45,12 +49,14 @@ def gameLoop(FPS):
     gameExit = False
     gameOver = False
 
+
     parent_x = display_width / 2
     parent_y = display_height / 2
     parent_x_change = block_size
     parent_y_change = 0
     FPS = 8
 
+    #Generates food at random location within the screen dimensions
     randFoodX = random.randrange(0, (display_width - block_size), block_size)
     randFoodY = random.randrange(0, (display_height - block_size), block_size)
 
@@ -73,7 +79,7 @@ def gameLoop(FPS):
                         gameExit = True
                         gameOver = False
 
-
+        #Get all Keyboard events
         for event in pygame.event.get():
             if (event.type) == pygame.QUIT:
                 gameExit = True
@@ -117,7 +123,6 @@ def gameLoop(FPS):
         gameDisplay.fill(WHITE)
         pygame.draw.rect(gameDisplay, RED, [randFoodX , randFoodY, block_size, block_size])
 
-        #pygame.draw.rect(gameDisplay, GREEN, [parent_x, parent_y, snake_size, snake_size])
         #params = (display layer, color, top left position (x,y), width, height)
 
         #Clear snakehead coords because there is now a new head
@@ -137,8 +142,10 @@ def gameLoop(FPS):
                 gameOver = True
 
         snake(snakeList)
+        #Player starts at size 2 so any food collected after this should count as score
         score(snakeLength - 2)
 
+        #Reprints everything at new location
         pygame.display.update()
 
         #Checks if you collide with Food
@@ -148,6 +155,7 @@ def gameLoop(FPS):
             randFoodY = random.randrange(0, (display_height - block_size), block_size)
             snakeLength += 1
             print ("FOOD")
+            #Increases move speed for difficulty
             FPS += 1
 
         clock.tick(FPS)
