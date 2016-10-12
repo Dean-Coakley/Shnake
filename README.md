@@ -1,5 +1,5 @@
 # Shnake
-
+<img src="https://github.com/Dean-Coakley/Shnake/blob/master/images/shnake.png">
 ### Built with
 
 * Python 2.7 (Sadly)
