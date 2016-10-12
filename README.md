@@ -6,9 +6,9 @@
 * Pygame 1.91
 
 ### Installing/Running
-* Download the above prerequizitgskjetlk
-* Clone/download this repo
-* Run Shnake.py ensuring that you are using Python 2.7
+* Download the above prerequisites
+* Clone/download this repository
+* Run Shnake.py ensuring that you are using Python 2.7 and have the Pygame module installed
 
 
 ### Author(s)
